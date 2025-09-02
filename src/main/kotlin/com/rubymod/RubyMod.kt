@@ -18,13 +18,13 @@ const val MOD_ID = "rubymod"  // <-- объявляем здесь, на уро�
 object RubyMod : ModInitializer {
     private val logger = LoggerFactory.getLogger("rubymod")
 
-    val RubyBlock: Block = Block(
+    val ruby_block: Block = Block(
         AbstractBlock.Settings.create()
             .mapColor { MapColor.BRIGHT_RED }
-            .strength( 3.0f, 6.0f)
+            .strength( 2.0f, 6.0f)
             .requiresTool()
             .sounds(BlockSoundGroup.STONE)
-            //.dropsLike()
+            //rubyMod.dropsLike()
     )
     override fun onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -32,13 +32,13 @@ object RubyMod : ModInitializer {
 		// Proceed with mild caution.
 		logger.info("Hello Fabric world!")
         // Регистрируем блок
-        Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), RubyBlock)
+        Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), ruby_block)
 
         // Регистрируем BlockItem, чтобы можно было поставить блок в инвентарь
         Registry.register(
             Registries.ITEM,
             Identifier(MOD_ID, "ruby_block"),
-            BlockItem(RubyBlock, Item.Settings())
+            BlockItem(ruby_block, Item.Settings())
         )
 	}
 }
