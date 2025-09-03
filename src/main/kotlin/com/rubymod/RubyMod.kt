@@ -1,7 +1,7 @@
 package com.rubymod
 
+import kotlinx.serialization.internal.InlinePrimitiveDescriptor
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.impl.networking.NetworkingImpl.MOD_ID
 import org.slf4j.LoggerFactory
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
@@ -24,8 +24,16 @@ object RubyMod : ModInitializer {
             .strength( 2.0f, 6.0f)
             .requiresTool()
             .sounds(BlockSoundGroup.STONE)
-            //rubyMod.dropsLike()
     )
+    val ruby: Item = Item(
+        Item.Settings()
+            .maxCount(64) // максимум в стаке (по умолчанию 64)
+            //.maxDamage(250) // «прочность», если предмет ломается
+            //.fireproof() // не сгорит в лаве
+            //.rarity(Rarity.RARE) // редкость (обычная, редкая, эпическая)
+            //.recipeRemainder(Item.ruby) // возвращает предмет после крафта, как ведро, но предмет, который возвращается уже должен быть ранее добавлен, в данному случае нужно работать с рецептами крафта
+    )
+
     override fun onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
@@ -33,7 +41,7 @@ object RubyMod : ModInitializer {
 		logger.info("Hello Fabric world!")
         // Регистрируем блок
         Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), ruby_block)
-
+        Registry.register(Registries.ITEM, Identifier(com.rubymod.MOD_ID, "ruby"), ruby)
         // Регистрируем BlockItem, чтобы можно было поставить блок в инвентарь
         Registry.register(
             Registries.ITEM,
