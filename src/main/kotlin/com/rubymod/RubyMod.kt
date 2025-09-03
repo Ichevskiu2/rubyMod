@@ -1,6 +1,5 @@
 package com.rubymod
 
-import kotlinx.serialization.internal.InlinePrimitiveDescriptor
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 import net.minecraft.block.AbstractBlock
@@ -25,6 +24,13 @@ object RubyMod : ModInitializer {
             .requiresTool()
             .sounds(BlockSoundGroup.STONE)
     )
+    val ruby_ore: Block = Block(
+        AbstractBlock.Settings.create()
+            .mapColor { MapColor.STONE_GRAY }
+            .strength( 2.0f, 6.0f)
+            .requiresTool()
+            .sounds(BlockSoundGroup.STONE)
+    )
     val ruby: Item = Item(
         Item.Settings()
             .maxCount(64) // максимум в стаке (по умолчанию 64)
@@ -41,12 +47,18 @@ object RubyMod : ModInitializer {
 		logger.info("Hello Fabric world!")
         // Регистрируем блок
         Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), ruby_block)
-        Registry.register(Registries.ITEM, Identifier(com.rubymod.MOD_ID, "ruby"), ruby)
+        Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_ore"), ruby_ore)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby"), ruby)
         // Регистрируем BlockItem, чтобы можно было поставить блок в инвентарь
         Registry.register(
             Registries.ITEM,
             Identifier(MOD_ID, "ruby_block"),
             BlockItem(ruby_block, Item.Settings())
+        )
+        Registry.register(
+            Registries.ITEM,
+            Identifier(MOD_ID, "ruby_ore"),
+            BlockItem(ruby_ore, Item.Settings())
         )
 	}
 }
