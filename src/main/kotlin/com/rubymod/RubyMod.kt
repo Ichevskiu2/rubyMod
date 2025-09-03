@@ -7,12 +7,29 @@ import net.minecraft.block.Block
 import net.minecraft.block.MapColor
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.PickaxeItem
+import net.minecraft.item.AxeItem
+import net.minecraft.item.ShovelItem
+import net.minecraft.item.HoeItem
+import net.minecraft.item.SwordItem
 import net.minecraft.registry.Registries
 import net.minecraft.registry.Registry
 import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
+import net.minecraft.item.ToolMaterial
+import net.minecraft.recipe.Ingredient
 
 const val MOD_ID = "rubymod"  // <-- объявляем здесь, на уровне пакета
+
+object RubyToolMaterial : ToolMaterial {
+    override fun getDurability(): Int = 1024              // прочность (железо = 250, алмаз = 1561)
+    override fun getMiningSpeedMultiplier(): Float = 7.0f // скорость копания
+    override fun getAttackDamage(): Float = 2.5f          // базовый урон
+    override fun getMiningLevel(): Int = 3                // уровень добычи (0-древо, 1-камень, 2-железо, 3-алмаз, 4-незерит)
+    override fun getEnchantability(): Int = 15            // зачаровываемость (чем больше, тем лучше)
+    override fun getRepairIngredient(): Ingredient =
+        Ingredient.ofItems(RubyMod.ruby)                  // предмет для починки (наш ruby item)
+}
 
 object RubyMod : ModInitializer {
     private val logger = LoggerFactory.getLogger("rubymod")
@@ -37,7 +54,38 @@ object RubyMod : ModInitializer {
             //.maxDamage(250) // «прочность», если предмет ломается
             //.fireproof() // не сгорит в лаве
             //.rarity(Rarity.RARE) // редкость (обычная, редкая, эпическая)
-            //.recipeRemainder(Item.ruby) // возвращает предмет после крафта, как ведро, но предмет, который возвращается уже должен быть ранее добавлен, в данному случае нужно работать с рецептами крафта
+            //recipeRemainder(Item.ruby) // возвращает предмет после крафта, как ведро, но предмет, который возвращается уже должен быть ранее добавлен, в данному случае нужно работать с рецептами крафта
+    )
+    // Инструмент — кирка
+    val ruby_pickaxe: Item = PickaxeItem(
+        RubyToolMaterial,   // наш материал
+        1,                  // добавочный урон (к базовому)
+        -2.8f,              // скорость атаки
+        Item.Settings()
+    )
+    val ruby_axe: Item = AxeItem(
+        RubyToolMaterial,   // наш материал
+        8f,                  // добавочный урон (к базовому)
+        -3.5f,              // скорость атаки
+        Item.Settings()
+    )
+    val ruby_sword: Item = SwordItem(
+        RubyToolMaterial,   // наш материал
+        6,                  // добавочный урон (к базовому)
+        -1.7f,              // скорость атаки
+        Item.Settings()
+    )
+    val ruby_hoe: Item = HoeItem(
+        RubyToolMaterial,   // наш материал
+        1,                  // добавочный урон (к базовому)
+        -2.8f,              // скорость атаки
+        Item.Settings()
+    )
+    val ruby_shovel: Item = ShovelItem(
+        RubyToolMaterial,   // наш материал
+        8f,                  // добавочный урон (к базовому)
+        -2.8f,              // скорость атаки
+        Item.Settings()
     )
 
     override fun onInitialize() {
@@ -49,6 +97,12 @@ object RubyMod : ModInitializer {
         Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), ruby_block)
         Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_ore"), ruby_ore)
         Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby"), ruby)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_pickaxe"),ruby_pickaxe )
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_axe"), ruby_axe)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_sword"), ruby_sword)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_hoe"), ruby_hoe)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_shovel"), ruby_shovel)
+
         // Регистрируем BlockItem, чтобы можно было поставить блок в инвентарь
         Registry.register(
             Registries.ITEM,
