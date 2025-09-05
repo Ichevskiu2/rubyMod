@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory
 import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.block.MapColor
+import net.minecraft.item.ArmorItem
+import net.minecraft.item.ArmorMaterial
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.item.PickaxeItem
@@ -18,6 +20,7 @@ import net.minecraft.sound.BlockSoundGroup
 import net.minecraft.util.Identifier
 import net.minecraft.item.ToolMaterial
 import net.minecraft.recipe.Ingredient
+import net.minecraft.sound.SoundEvents
 
 const val MOD_ID = "rubymod"  // <-- объявляем здесь, на уровне пакета
 
@@ -31,6 +34,41 @@ object RubyToolMaterial : ToolMaterial {
         Ingredient.ofItems(RubyMod.ruby)                  // предмет для починки (наш ruby item)
 }
 
+object RubyArmorMaterial : ArmorMaterial {
+    override fun getDurability(type: ArmorItem.Type): Int {
+        val base = when (type) {
+            ArmorItem.Type.BOOTS -> 13
+            ArmorItem.Type.LEGGINGS -> 15
+            ArmorItem.Type.CHESTPLATE -> 16
+            ArmorItem.Type.HELMET -> 11
+        }
+        val multiplier = 30 // множитель прочности (как у алмаза)
+        return base * multiplier
+    }
+
+    override fun getProtection(type: ArmorItem.Type): Int = when (type) {
+        ArmorItem.Type.BOOTS -> 2
+        ArmorItem.Type.LEGGINGS -> 5
+        ArmorItem.Type.CHESTPLATE -> 7
+        ArmorItem.Type.HELMET -> 2
+    }
+
+    override fun getEnchantability(): Int = 9
+
+    override fun getEquipSound() = SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND
+
+    override fun getRepairIngredient(): Ingredient =
+        Ingredient.ofItems(RubyMod.ruby) // твой ruby item
+
+    // ВАЖНО: имя влияет на путь к текстурам брони:
+    // assets/rubymod/textures/models/armor/ruby_layer_1.png
+    // assets/rubymod/textures/models/armor/ruby_layer_2.png
+    override fun getName(): String = "ruby"
+
+    override fun getToughness(): Float = 1.0f  // броня более "стойкая" (как у алмаза)
+
+    override fun getKnockbackResistance(): Float = 0.0f
+}
 object RubyMod : ModInitializer {
     private val logger = LoggerFactory.getLogger("rubymod")
 
@@ -87,6 +125,10 @@ object RubyMod : ModInitializer {
         -2.8f,              // скорость атаки
         Item.Settings()
     )
+    val ruby_helmet = ArmorItem(RubyArmorMaterial, ArmorItem.Type.HELMET, Item.Settings())
+    val ruby_chestplate = ArmorItem(RubyArmorMaterial, ArmorItem.Type.CHESTPLATE, Item.Settings())
+    val ruby_leggings = ArmorItem(RubyArmorMaterial, ArmorItem.Type.LEGGINGS, Item.Settings())
+    val ruby_boots = ArmorItem(RubyArmorMaterial, ArmorItem.Type.BOOTS, Item.Settings())
 
     override fun onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -102,6 +144,12 @@ object RubyMod : ModInitializer {
         Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_sword"), ruby_sword)
         Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_hoe"), ruby_hoe)
         Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_shovel"), ruby_shovel)
+
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_helmet"), ruby_helmet)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_chestplate"), ruby_chestplate)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_leggings"), ruby_leggings)
+        Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_boots"), ruby_boots)
+
 
         // Регистрируем BlockItem, чтобы можно было поставить блок в инвентарь
         Registry.register(
