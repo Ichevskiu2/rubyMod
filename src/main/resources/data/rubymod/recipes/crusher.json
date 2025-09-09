@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#n#",
+    "CHC",
+    "CCC"
+  ],
+  "key": {
+    "#": {"item": "rubymod:ruby"},
+    "n": {"item": "minecraft:netherite_ingot"},
+    "C": {"item": "minecraft:cobblestone"},
+    "H": {"item": "minecraft:hopper"}
+  },
+  "result": {
+    "item": "rubymod:crusher",
+    "count": 1
+  }
+}

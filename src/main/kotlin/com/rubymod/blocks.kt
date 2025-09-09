@@ -24,11 +24,19 @@ val ruby_ore: Block = Block(
         .requiresTool()
         .sounds(BlockSoundGroup.STONE)
 )
+val crusher: Block = Block(
+    AbstractBlock.Settings.create()
+        .mapColor { MapColor.LIGHT_GRAY }
+        .strength(2.0f, 6.0f)
+        .requiresTool()
+        .sounds(BlockSoundGroup.VINE)
+)
 
 fun registerBlocks() {
     // потом блоки
     Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_block"), ruby_block)
     Registry.register(Registries.BLOCK, Identifier(MOD_ID, "ruby_ore"), ruby_ore)
+    Registry.register(Registries.BLOCK, Identifier(MOD_ID, "crusher"), crusher)
 
     // blockItems
     Registry.register(
@@ -41,5 +49,9 @@ fun registerBlocks() {
         Identifier(MOD_ID, "ruby_ore"),
         BlockItem(ruby_ore, Item.Settings())
     )
-
+    Registry.register(
+        Registries.ITEM,
+        Identifier(MOD_ID, "crusher"),
+        BlockItem(crusher, Item.Settings())
+    )
 }

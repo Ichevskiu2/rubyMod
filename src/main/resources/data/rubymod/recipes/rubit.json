@@ -1,17 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "# #",
     "###",
+    "#C#",
     "###"
   ],
   "key": {
     "#": {
-      "item": "rubymod:rubit"
+      "item": "rubymod:ruby_dust"
+    },
+    "C": {
+      "item": "minecraft:netherite_ingot"
     }
   },
   "result": {
-    "item": "rubymod:ruby_chestplate",
+    "item": "rubymod:rubit",
     "count": 1
   }
 }
