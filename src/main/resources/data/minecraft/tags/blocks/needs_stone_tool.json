@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "rubymod:ruby_block",
-    "rubymod:crusher"
+    "rubymod:ruby_block"
   ]
 }

@@ -11,5 +11,9 @@ object RubyMod : ModInitializer {
         registerTools()
         registerBlocks()
         registerArmor()
+
+        ModBlockEntities.registerAll()
+        ModScreenHandlers.registerAll()
+        ModBlockEntities.registerAll() // Регистрируем один раз
     }
 }

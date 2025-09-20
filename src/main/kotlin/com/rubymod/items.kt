@@ -24,8 +24,16 @@ val ruby_dust: Item = Item(
 val rubit: Item = Item(
     Item.Settings()
         .maxCount(64) // максимум в стаке (по умолчанию 64)
-    //.maxDamage(250) // «прочность», если предмет ломается
+        //.maxDamage(250) // «прочность», если предмет ломается
         .fireproof() // не сгорит в лаве
+    //.rarity(Rarity.RARE) // редкость (обычная, редкая, эпическая)
+    //recipeRemainder(Item.ruby) // возвращает предмет после крафта, как ведро, но предмет, который возвращается уже должен быть ранее добавлен, в данному случае нужно работать с рецептами крафта
+)
+val cutter: Item = Item(
+    Item.Settings()
+        .maxCount(16) // максимум в стаке (по умолчанию 64)
+        //.maxDamage(250) // «прочность», если предмет ломается
+        //.fireproof() // не сгорит в лаве
     //.rarity(Rarity.RARE) // редкость (обычная, редкая, эпическая)
     //recipeRemainder(Item.ruby) // возвращает предмет после крафта, как ведро, но предмет, который возвращается уже должен быть ранее добавлен, в данному случае нужно работать с рецептами крафта
 )
@@ -34,4 +42,5 @@ fun registerItems() {
     Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby"), ruby)
     Registry.register(Registries.ITEM, Identifier(MOD_ID, "ruby_dust"), ruby_dust)
     Registry.register(Registries.ITEM, Identifier(MOD_ID, "rubit"), rubit)
+    Registry.register(Registries.ITEM, Identifier(MOD_ID, "cutter"), cutter)
 }

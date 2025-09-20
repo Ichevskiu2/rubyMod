@@ -23,7 +23,7 @@
 		],
 		"client": [
 			{
-				"value": "com.rubymod.RubyModClient",
+				"value": "com.rubymod.RubymodClient",
 				"adapter": "kotlin"
 			}
 		]
