@@ -15,7 +15,7 @@ import net.minecraft.screen.slot.Slot
 class CrusherScreenHandler(
     syncId: Int,
     playerInventory: PlayerInventory,
-    inventory: Inventory = SimpleInventory(4)
+    inventory: Inventory = SimpleInventory(5)
 ) : ScreenHandler(ModScreenHandlers.CRUSHER, syncId) {
 
     class FuelSlot(inventory: Inventory, index: Int, x: Int, y: Int) : Slot(inventory, index, x, y) {

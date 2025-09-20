@@ -35,7 +35,7 @@ object RubyArmorMaterial : ArmorMaterial {
     // ЗДЕСЬ: используем top-level `ruby` из items.kt
     override fun getRepairIngredient(): Ingredient = Ingredient.ofItems(ruby)
 
-    override fun getName(): String = "ruby" // для путей к текстурам: textures/models/armor/ruby_layer_*.png
+    override fun getName(): String { return "rubymod:ruby" } // для путей к текстурам: textures/models/armor/ruby_layer_*.png
     override fun getToughness(): Float = 1.0f
     override fun getKnockbackResistance(): Float = 0.0f
 }
