@@ -1,11 +1,14 @@
 package com.rubymod.screenhandler
 
 import com.rubymod.ModScreenHandlers
+import com.rubymod.cutter
+import com.rubymod.ruby
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.Inventory
 import net.minecraft.inventory.SimpleInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.screen.ScreenHandler
 import net.minecraft.screen.slot.Slot
 
@@ -15,12 +18,36 @@ class CrusherScreenHandler(
     inventory: Inventory = SimpleInventory(4)
 ) : ScreenHandler(ModScreenHandlers.CRUSHER, syncId) {
 
+    class FuelSlot(inventory: Inventory, index: Int, x: Int, y: Int) : Slot(inventory, index, x, y) {
+        override fun canInsert(stack: ItemStack): Boolean {
+            return stack.item == Items.BLAZE_POWDER // или AbstractFurnaceBlockEntity.canUseAsFuel(stack)
+        }
+    }
+
+    class CutterSlot(inventory: Inventory, index: Int, x: Int, y: Int) : Slot(inventory, index, x, y) {
+        override fun canInsert(stack: ItemStack): Boolean {
+            return stack.item == cutter // или AbstractFurnaceBlockEntity.canUseAsFuel(stack)
+        }
+    }
+
+    class RubySlot(inventory: Inventory, index: Int, x: Int, y: Int) : Slot(inventory, index, x, y) {
+        override fun canInsert(stack: ItemStack): Boolean {
+            return stack.item == ruby // или AbstractFurnaceBlockEntity.canUseAsFuel(stack)
+        }
+    }
+    class OutputSlot(inventory: Inventory, index: Int, x: Int, y: Int) : Slot(inventory, index, x, y) {
+        override fun canInsert(stack: ItemStack): Boolean {
+            return false // сюда руками класть нельзя
+        }
+    }
+
     init {
         // твоя схема: 2 резака + вход + топливо + выход
-        addSlot(Slot(inventory, 0, 26, 17)) // резак 1
-        addSlot(Slot(inventory, 1, 44, 17)) // резак 2
-        addSlot(Slot(inventory, 2, 35, 53)) // топливо
-        addSlot(Slot(inventory, 3, 116, 35)) // выход
+        this.addSlot(RubySlot(inventory, 0, 34, 17)) // рубин
+        this.addSlot(CutterSlot(inventory, 1, 12, 17)) // резак 1
+        this.addSlot(CutterSlot(inventory, 2, 56, 17)) // резак 2
+        this.addSlot(FuelSlot(inventory, 3, 34, 53)) // топливо
+        this.addSlot(OutputSlot(inventory, 4, 116, 35)) // выход
 
         // инвентарь игрока
         for (m in 0 until 3) {
